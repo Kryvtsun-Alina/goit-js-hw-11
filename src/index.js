@@ -39,4 +39,48 @@ function displayImages(images) {
       .join('');
   
     gallery.innerHTML = galleryMarkup;
+  };
+
+  async function handleSearch(event) {
+    event.preventDefault();
+    const searchQuery = event.target.elements.searchQuery.value.trim();
+  
+    if (searchQuery === '') {
+      Notiflix.Notify.failure('Please enter a search query.');
+      return;
+    }
+  
+    page = 1;
+
+    const images = await searchImages(searchQuery);
+  
+    if (images.length === 0) {
+      Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+    } else {
+      displayImages(images);
+      Notiflix.Notify.success(`Found ${images.length} images.`);
+      loadMoreBtn.classList.remove('visually-hidden');
+    }
+  };
+
+  async function handleSearch(event) {
+    event.preventDefault();
+    const searchQuery = event.target.elements.searchQuery.value.trim();
+  
+    if (searchQuery === '') {
+      Notiflix.Notify.failure('Please enter a search query.');
+      return;
+    }
+  
+    page = 1; // Скидаємо сторінку при новому пошуковому запиті
+  
+    const images = await searchImages(searchQuery);
+  
+    if (images.length === 0) {
+      Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+    } else {
+      displayImages(images);
+      Notiflix.Notify.success(`Found ${images.length} images.`);
+      loadMoreBtn.classList.remove('visually-hidden');
+    }
   }
