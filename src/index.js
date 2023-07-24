@@ -19,4 +19,24 @@ async function searchImages(query) {
         console.log('Error fetching images:', error);
         return [];
     }
-}ж
+};
+
+function displayImages(images) {
+    const galleryMarkup = images
+      .map(
+        (image) => `
+        <div class="photo-card">
+          <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
+          <div class="info">
+            <p class="info-item"><b>Likes:</b> ${image.likes}</p>
+            <p class="info-item"><b>Views:</b> ${image.views}</p>
+            <p class="info-item"><b>Comments:</b> ${image.comments}</p>
+            <p class="info-item"><b>Downloads:</b> ${image.downloads}</p>
+          </div>
+        </div>
+      `
+      )
+      .join('');
+  
+    gallery.innerHTML = galleryMarkup;
+  }
