@@ -1,5 +1,7 @@
 import axios from 'axios';
 import Notiflix from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const searchForm = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
@@ -25,7 +27,7 @@ function displayImages(images) {
     const galleryMarkup = images
       .map(
         (image) => `
-        <div class="photo-card">
+        <a href="${image.largeImageURL}" class="photo-card">
           <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
           <div class="info">
             <p class="info-item"><b>Likes:</b> ${image.likes}</p>
@@ -33,13 +35,15 @@ function displayImages(images) {
             <p class="info-item"><b>Comments:</b> ${image.comments}</p>
             <p class="info-item"><b>Downloads:</b> ${image.downloads}</p>
           </div>
-        </div>
+        </a>
       `
       )
-      .join('');
+      .join("");
   
     gallery.innerHTML = galleryMarkup;
-  };
+  
+    const lightbox = new SimpleLightbox('.gallery a', {});
+      }
 
   async function handleSearch(event) {
     event.preventDefault();
